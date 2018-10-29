@@ -5,7 +5,11 @@
 </head>
 <body>
 <h3>Bienvenido Mastermind!</h3>
-
+@if($colores != null)
+	@for ($i=0; $i < $colores; $i++)
+		{{$colores[i]}}
+	@endfor
+@endif
 <h4>Introduce un código</h4>
 <form method="post" action="jugar">
 @csrf

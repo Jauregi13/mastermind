@@ -6,7 +6,7 @@
 <body>
 <h3><b>Bienvenido/a al Mastermind!</b></h3>
 
-<form method="post" action="jugar">
+<form method="post" action="iniciar">
 	@csrf-
 	<label>Jugador/a:</label>
 	<input type="text" name="nombre">

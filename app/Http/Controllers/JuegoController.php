@@ -11,13 +11,11 @@ class JuegoController extends Controller
     	$longitud = $request -> input('longitud');
     	$nombre = $request -> input('nombre');
     	$intentos = $request -> input('intentos');
-    	$request->session()->put('nombre', $nombre);
-    	$request->session()->put('longitud', $longitud);
-    	$request->session()->put('intentos', $intentos);
-
-    	$nombre = $request -> session() ->get('nombre');
-    	$longitud = $request -> session() ->get('longitud');
-    	$intentos = $request -> session() ->get('intentos');
+        $colores = $request -> input('colores');
+    	session(['nombre' => $nombre]);
+    	session(['longitud' => $longitud]);
+    	session(['intentos' => $intentos]);
+        session(['colores' => $colores]);
     	
     	return view('juego',['longitud' => $longitud, 'nombre' => $nombre, 'intentos' => $intentos]);
     }
@@ -26,12 +24,14 @@ class JuegoController extends Controller
     public function jugar(Request $request)
     {
     	$nombre = session('nombre');
-    	$longitud = $request -> session() ->get('longitud');
-    	$intentos = $request -> session() ->get('intentos');
+    	$longitud = session('longitud');
+    	$intentos = session('intentos');
+        $colores = session('colores');
+        $array_colores = array();
+        for ($i=0; $i < $colores; $i++) { 
+            $array_colores[i] = rand(0,8);
+        }
 
-    	/*$request->session()->forget('nombre');
-
-		$request->session()->flush();*/
-    	return view('juego', ['nombre' => $nombre, 'longitud' => $longitud, 'intentos' => $intentos]);
+    	return view('juego', ['nombre' => $nombre, 'longitud' => $longitud, 'intentos' => $intentos, 'colores' => $array_colores]);
     }
 }
