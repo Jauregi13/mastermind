@@ -5,11 +5,14 @@
 </head>
 <body>
 <h3><b>Bienvenido/a al Mastermind!</b></h3>
-
+@for($i = 0; $i < 8;$i++)
+	<img src="img/bola{{$i}}.png">
+@endfor
 <form method="post" action="iniciar">
-	@csrf-
+	@csrf
+	<br>
 	<label>Jugador/a:</label>
-	<input type="text" name="nombre">
+	<input type="text" name="nombre" value="Jon">
 	<br><br>
 	<label>Longitud de la clave:</label>
 	<br>

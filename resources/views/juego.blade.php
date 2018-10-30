@@ -5,16 +5,14 @@
 </head>
 <body>
 <h3>Bienvenido Mastermind!</h3>
-@if($colores != null)
-	@for ($i=0; $i < $colores; $i++)
-		{{$colores[i]}}
-	@endfor
-@endif
+	@foreach(Session::get('clave') as $valor)
+		<img src="img/bola{{$valor}}.png">
+	@endforeach
 <h4>Introduce un código</h4>
 <form method="post" action="jugar">
 @csrf
 @for ($i = 0; $i < $longitud; $i++)
-	<select>
+	<select name="clave">
 		<option value="1">1</option>
 		<option value="2">2</option>
 		<option value="3">3</option>
@@ -30,10 +28,10 @@
 </form>
 <br><br>
 
-<h3>Jugador/a: {{$nombre}}</h3>
+<h3>Jugador/a: {{Session::get('nombre')}}</h3>
 
 <hr>
 
-<p>Intento: 1 / {{$intentos}}</p>
+<p>Intento: {{Session::get('intentos')}} / {{Session::get('intentosMax')}}</p>
 </body>
 </html>
