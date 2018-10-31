@@ -6,8 +6,15 @@
 <body>
 <h3>Bienvenido Mastermind!</h3>
 @if(isset($_POST['comprobar']))
-	@foreach($clave as $valor)
-		<img src="img/bola{{$valor}}.png">
+	@foreach(Session::get('resultado') as $registro)
+
+		<?php $i = 0; ?>
+		@for($i = 0; $i < $longitud; $i++)
+			<img src="img/bola{{$registro[$i]}}.png">
+		@endfor
+		<b>Aciertos: {{$registro[$i]}}
+		Candidatos: {{$registro[$i+1]}}</b>
+		<br>
 	@endforeach
 @endif
 <h4>Introduce un código</h4>
