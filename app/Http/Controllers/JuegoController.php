@@ -14,7 +14,7 @@ class JuegoController extends Controller
     	$intentos = 1;
         $colores = $request -> input('colores');
         $repetido = $request -> input('repetido');
-        session(['repetido' => $repetido]);
+
     	session(['nombre' => $nombre]);
     	session(['longitud' => $longitud]);
     	session(['intentosMax' => $intentosMax]);
@@ -24,7 +24,15 @@ class JuegoController extends Controller
         $request->session()->forget('clave');
 
         for($i=0;$i < $longitud; $i++){
-        	$request->session()->push('clave', rand(0,$colores -1));
+            if($repetido == 'si'){
+
+                
+
+            }
+            else{
+                $request->session()->push('clave', rand(0,$colores -1));
+            }
+        	
         }
     	
     	return view('juego',['longitud' => $longitud, 'intentos' => $intentos, 'colores' => $colores]);
@@ -35,19 +43,14 @@ class JuegoController extends Controller
     {
     	$nombre = session('nombre');
     	$longitud = session('longitud');
-    	session('intentos', 3);
     	$intentos = session('intentos');
         $colores = session('colores');
         $array_colores = array();
-        for ($i=0; $i < $longitud; $i++) {
-        	if(session('repetido') == 'no'){
-
-        	}
-        	else{
-        		$array_colores[$i] = rand(0,$colores -1);
-        	}            
+        $clave = array();
+        for ($i=0; $i < $longitud; $i++) { 
+            $clave[$i] = $request -> input($i);
         }
 
-    	return view('juego', ['nombre' => $nombre, 'longitud' => $longitud, 'intentos' => $intentos, 'colores' => $array_colores]);
+    	return view('juego', ['nombre' => $nombre, 'longitud' => $longitud, 'intentos' => $intentos, 'colores' => $array_colores, 'clave' => $clave]);
     }
 }
