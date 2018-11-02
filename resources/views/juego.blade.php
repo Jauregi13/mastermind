@@ -5,31 +5,37 @@
 </head>
 <body>
 <h3>Bienvenido Mastermind!</h3>
-@if(isset($_POST['comprobar']))
+@if(Request::has('comprobar'))
 	@foreach(Session::get('resultado') as $registro)
-
-		<?php $i = 0; ?>
-		@for($i = 0; $i < $longitud; $i++)
+		@for($i = 0; $i < Session::get('longitud'); $i++)
 			<img src="img/bola{{$registro[$i]}}.png">
 		@endfor
-		<b>Aciertos: {{$registro[$i]}}
-		Candidatos: {{$registro[$i+1]}}</b>
+		<b>Aciertos: {{$registro[count($registro)-2]}}
+		Candidatos: {{$registro[count($registro)-1]}}</b>
 		<br>
 	@endforeach
+	@php
+	$indiceUltimoIntento = Session::get('intentos') - 1;
+	$indiceAciertos = count(Session::get('resultado')[$indiceUltimoIntento]) - 2; 
+	$ultimoIntento = Session::get('resultado')[$indiceUltimoIntento][$indiceAciertos];
+	@endphp
+	@if($ultimoIntento == Session::get('longitud'))
+		<h3>Has acertado la clave!! Enhorabuena!!</h3>
+		<a href="/"><button>Nueva partida</button></a>
+
+	@elseif($ultimoIntento != Session::get('longitud') && Session::get('intentos') == Session::get('intentosMax'))
+		<h3>No has acertado la clave!! Intentalo otra vez</h3>
+		<a href="/"><button>Nueva partida</button></a>
+	@endif
 @endif
 <h4>Introduce un código</h4>
 <form method="post" action="jugar">
 @csrf
-@for ($i = 0; $i < $longitud; $i++)
+@for ($i = 0; $i < Session::get('longitud'); $i++)
 	<select name="{{$i}}">
-		<option value="0">Azul</option>
-		<option value="1">Naranja</option>
-		<option value="2">Verde</option>
-		<option value="3">Rojo</option>
-		<option value="4">Azul Turquesa</option>
-		<option value="5">Violeta</option>
-		<option value="6">Amarillo</option>
-		<option value="7">Gris</option>
+	@for($j = 0; $j < Session::get('valorcolores'); $j++)
+		<option value="{{$j}}">{{Session::get('colores')[$j]}}</option>
+	@endfor
 	</select>
 @endfor
 <br><br>
@@ -43,7 +49,6 @@
 <h3>Jugador/a: {{Session::get('nombre')}}</h3>
 
 <hr>
-
 <p>Intento: {{Session::get('intentos')}} / {{Session::get('intentosMax')}}</p>
 </body>
 </html>

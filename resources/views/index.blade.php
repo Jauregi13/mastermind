@@ -57,6 +57,11 @@
 	<input type="submit" name="iniciar" value="Iniciar partida">
 
 </form>
+@if(Request::has('iniciar'))
+
+	{{$mensajeError}}
+
+@endif
 
 </body>
 </html>
