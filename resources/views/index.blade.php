@@ -1,67 +1,100 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>MasterMind</title>
-</head>
-<body>
-<h3><b>Bienvenido/a al Mastermind!</b></h3>
-@for($i = 0; $i < 8;$i++)
-	<img src="img/bola{{$i}}.png">
-@endfor
+@extends('layouts.layout')
+
+@section('titulo', 'Configuración Mastermind')
+
+@section('contenido')
+
 <form method="post" action="iniciar">
 	@csrf
-	<br>
+	<div class="form-group">
 	<label>Jugador/a:</label>
-	<input type="text" name="nombre" value="Jon">
-	<br><br>
-	<label>Longitud de la clave:</label>
-	<br>
-	<input type="radio" name="longitud" value="4" checked>
-	<label>4</label>
-	<input type="radio" name="longitud" value="5">
-	<label>5</label>
-	<br><br>
-	<label>Numero de colores posibles:</label>
-	<br>
-	<input type="radio" name="colores" value="4">
-	<label>4</label>
-	<input type="radio" name="colores" value="5">
-	<label>5</label>
-	<input type="radio" name="colores" value="6" checked>
-	<label>6</label>
-	<input type="radio" name="colores" value="7">
-	<label>7</label>
-	<input type="radio" name="colores" value="8">
-	<label>8</label>
-	<br><br>
-	<label>Permitir repetidos:</label>
-	<br>
-	<input type="radio" name="repetido" value="si">
-	<label>Sí</label>
-	<input type="radio" name="repetido" value="no" checked>
-	<label>No</label>
-	<br><br>
-	<label>Numero de intentos:</label>
-	<br>
-	<select name="intentos">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		<option value="6">6</option>
-		<option value="7">7</option>
-		<option value="8">8</option>
-	</select>
-	<br><br>
-	<input type="submit" name="iniciar" value="Iniciar partida">
-
+	<input type="text" class="form-control" name="nombre" value="Jon">
+	</div>
+	<fieldset class="form-group">
+		<label>Longitud de la clave:</label>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" class="form-check-input" name="longitud" value="4" checked>
+				4
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" class="form-check-input" name="longitud" value="5">
+				5
+			</label>
+		</div>
+	</fieldset>
+	<fieldset class="form-group">
+		<label>Numero de colores posibles:</label>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="colores" value="4" class="form-check-input">
+				4
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="colores" value="5" class="form-check-input">
+				5
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="colores" value="6" class="form-check-input">
+				6
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="colores" value="7" class="form-check-input">
+				7
+			</label>
+		</div>	
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="colores" value="8" class="form-check-input">
+				8
+			</label>
+		</div>
+	</fieldset>
+	<fieldset class="form-group">
+		<label>Permitir repetidos:</label>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" class="form-check-input" name="repetido" value="si">
+				Sí	
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label">
+				<input type="radio" name="repetido" class="form-check-input" value="no" checked>
+				No
+			</label>
+		</div>	
+	</fieldset>
+	<div class="form-group">
+		<label>Numero de intentos:</label>
+		<select name="intentos" class="form-control">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+		</select>
+	</div>		
+	<input type="submit" class="btn btn-primary" name="iniciar" value="Iniciar partida">
 </form>
+@endsection
+@section('resultado/error')
+
 @if(Request::has('iniciar'))
-
-	{{$mensajeError}}
-
+	<div class="alert alert-danger" role="alert">
+		{{$mensajeError}}
+	</div>
 @endif
+@endsection
 
-</body>
-</html>
